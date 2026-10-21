@@ -166,16 +166,3 @@ mysql -u root -p --connect-timeout=600 school_erp < sql/generate_fake_data.sql
 ```
 
 The script commits in batches and runs `SET GLOBAL` for `wait_timeout` and the network timeouts, which needs an account with the privilege to do so. Those changes last until the MySQL server restarts. The procedures and temporary tables are dropped when it finishes.
-
-## Design notes and limitations
-
-- **The UI has no edit screen.** The DAOs include update methods, but the panels only add, view and delete.
-- **The dashboard's "Active Classes" card is a placeholder** and always shows 0.
-- **One shared connection.** There is no connection pool, and the connection is not designed for concurrent use. This is a single-user desktop app.
-- **Credentials are hardcoded** in `DatabaseConnection.java`. Do not commit a real password.
-- **No pagination.** Each list loads its whole table into memory, so "All Records" on a large attendance table is slow.
-- **Attendance is not de-duplicated.** Nothing stops the same student being marked twice on the same date.
-- **Course teachers are entered by numeric ID**, not chosen from a list.
-- **Validation is client-side only.** Emails are not checked for uniqueness, and the phone rule accepts digits only.
-- **No login or roles.** Anyone who opens the app can change any record.
-- **No grades module.** Grades and exams are not implemented.
